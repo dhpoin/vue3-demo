@@ -1,30 +1,37 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="app-container">
+    <el-tabs :model-value="activeName" type="card" @tab-click="handleClick">
+      <el-tab-pane label="组合式 API" name="compositionAPI"></el-tab-pane>
+      <el-tab-pane label="待办列表" name="todoList"></el-tab-pane>
+    </el-tabs>
+    <router-view/>
   </div>
-  <router-view/>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+  export default {
+    data() {
+      return {
+        activeName: "compositionAPI",
+      };
+    },
+    methods: {
+      handleClick(tab) {
+        this.$router.push(`/${tab.paneName}`);
+      },
+    },
+    watch: {
+      $route: {
+        handler() {
+          this.activeName = this.$route.name;
+        }
+      }
     }
+  };
+</script>
+
+<style lang="scss">
+  .app-container {
+    padding: 20px;
   }
-}
 </style>
